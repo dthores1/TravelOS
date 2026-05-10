@@ -1,22 +1,22 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
-import { TripProvider } from './src/context/TripContext';
-import { Layout } from './src/components/Layout';
-import ActiveTrip from './src/pages/ActiveTrip';
-import Home from './src/pages/Home';
-import TripBuilder from './src/pages/TripBuilder';
-import FlightResults from './src/pages/FlightResults';
-import BaggageSelection from './src/pages/BaggageSelection';
-import HotelResults from './src/pages/HotelResults';
-import HotelDetail from './src/pages/HotelDetail';
-import GroundTransport from './src/pages/GroundTransport';
-import ReviewItinerary from './src/pages/ReviewItinerary';
-import Dining from './src/pages/Dining';
-import MyTrips from './src/pages/MyTrips';
-import FlightDetail from './src/pages/FlightDetail';
-import CaseStudy from './src/pages/CaseStudy';
-import Confirmation from './src/pages/Confirmation';
+import { TripProvider } from './context/TripContext';
+import { Layout } from './components/Layout';
+import ActiveTrip from './pages/ActiveTrip';
+import Home from './pages/Home';
+import TripBuilder from './pages/TripBuilder';
+import FlightResults from './pages/FlightResults';
+import BaggageSelection from './pages/BaggageSelection';
+import HotelResults from './pages/HotelResults';
+import HotelDetail from './pages/HotelDetail';
+import GroundTransport from './pages/GroundTransport';
+import ReviewItinerary from './pages/ReviewItinerary';
+import Dining from './pages/Dining';
+import MyTrips from './pages/MyTrips';
+import FlightDetail from './pages/FlightDetail';
+import CaseStudy from './pages/CaseStudy';
+import Confirmation from './pages/Confirmation';
 export function App() {
   return (
     <TripProvider>
