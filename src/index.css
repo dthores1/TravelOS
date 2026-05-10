@@ -21,6 +21,9 @@
   --border-warm: #e5e0d8;
   --surface-white: #ffffff;
 }
+html {
+  scroll-behavior: smooth;
+}
 body {
   background-color: var(--bg-cream);
   color: var(--text-ink);

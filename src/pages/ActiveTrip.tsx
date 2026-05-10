@@ -16,6 +16,7 @@ import {
 'lucide-react';
 import { Link } from 'react-router-dom';
 import { destinationWeather } from '../data/mockWeather';
+import { ComingSoonPill } from '../components/ComingSoonPill';
 const weatherIcons = {
   sun: Sun,
   cloud: Cloud,
@@ -64,7 +65,7 @@ export default function ActiveTrip() {
         <div className="lg:col-span-8 space-y-8">
           <NextActionCard event={nextEvent || null} />
 
-          <div className="bg-surface rounded-2xl p-6 md:p-8 border border-warm shadow-subtle">
+          <div id="itinerary" className="bg-surface rounded-2xl p-6 md:p-8 border border-warm shadow-subtle scroll-mt-24">
             <h3 className="font-serif text-2xl text-ink mb-6">Itinerary</h3>
             <TripTimeline />
           </div>
@@ -113,16 +114,21 @@ export default function ActiveTrip() {
                   <span className="font-medium text-sm">Find dining</span>
                 </div>
               </Link>
-              <button className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-cream transition-colors text-left group">
+              <button
+                disabled
+                aria-disabled="true"
+                className="w-full flex items-center justify-between p-3 rounded-lg text-left cursor-not-allowed opacity-70">
+                
                 <div className="flex items-center gap-3 text-ink">
-                  <Map
-                    size={18}
-                    className="text-muted group-hover:text-teal transition-colors" />
-                  
+                  <Map size={18} className="text-muted" />
                   <span className="font-medium text-sm">View Route Map</span>
                 </div>
+                <ComingSoonPill />
               </button>
-              <button className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-cream transition-colors text-left group">
+              <Link
+                to="/trip/support"
+                className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-cream transition-colors text-left group">
+                
                 <div className="flex items-center gap-3 text-ink">
                   <Info
                     size={18}
@@ -130,7 +136,7 @@ export default function ActiveTrip() {
                   
                   <span className="font-medium text-sm">Trip Support</span>
                 </div>
-              </button>
+              </Link>
             </div>
           </div>
 

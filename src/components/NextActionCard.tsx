@@ -49,7 +49,7 @@ function getCTA(event: TimelineEvent): CTAConfig {
       return {
         label: 'View Itinerary',
         icon: <ArrowRight size={18} />,
-        to: '/trip/active'
+        to: '#itinerary'
       };
   }
 }
@@ -106,12 +106,19 @@ export function NextActionCard({ event }: NextActionCardProps) {
           </div>
         </div>
 
-        <Link
-          to={cta.to}
-          className="flex items-center justify-center gap-2 bg-ink text-cream px-6 py-3 rounded-lg font-medium hover:bg-ink/90 transition-colors w-full md:w-auto whitespace-nowrap">
-          
-          {cta.label} {cta.icon}
-        </Link>
+        {cta.to.startsWith('#') ? (
+          <a
+            href={cta.to}
+            className="flex items-center justify-center gap-2 bg-ink text-cream px-6 py-3 rounded-lg font-medium hover:bg-ink/90 transition-colors w-full md:w-auto whitespace-nowrap">
+            {cta.label} {cta.icon}
+          </a>
+        ) : (
+          <Link
+            to={cta.to}
+            className="flex items-center justify-center gap-2 bg-ink text-cream px-6 py-3 rounded-lg font-medium hover:bg-ink/90 transition-colors w-full md:w-auto whitespace-nowrap">
+            {cta.label} {cta.icon}
+          </Link>
+        )}
       </div>
 
       {event.details &&

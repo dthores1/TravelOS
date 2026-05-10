@@ -40,9 +40,7 @@ export default function CaseStudy() {
           comes from{' '}
           <strong className="text-ink font-medium">app-switching</strong> and{' '}
           <strong className="text-ink font-medium">unclear next steps</strong>.
-          A typical traveler holds the airline app, the rideshare app, the hotel
-          app, the transit app, and a maps app in working memory, then mentally
-          synchronizes them across a six-hour window.
+          A typical traveler mentally synchronizes the airline app, rideshare app, hotel app, transit app, and maps app across a six-hour travel window.
         </p>
         <p>
           When something moves — a delay, a gate change, traffic — every app
@@ -135,7 +133,7 @@ export default function CaseStudy() {
 
       <Section number="04" title="The disruption story">
         <p>
-          The flagship interaction. One tap on the demo control panel simulates
+          The most important product moment isn't booking — it's recovery. One tap on the demo control panel simulates
           a 45-minute flight delay. From there:
         </p>
         <ol className="list-none space-y-3 my-6">

@@ -145,8 +145,8 @@ export default function FlightDetail() {
             <div className="text-xs text-cream/60 uppercase tracking-wider mb-2">
               {flightEvent.details.duration}
             </div>
-            <div className="relative w-32 flex items-center">
-              <div className="w-full h-px bg-cream/30 border-dashed"></div>
+            <div className="relative w-32 h-6 flex items-center justify-center">
+              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-cream/30 border-dashed" />
               <motion.div
                 animate={{
                   x: [0, 8, 0]
@@ -155,8 +155,7 @@ export default function FlightDetail() {
                   duration: 2.5,
                   repeat: Infinity
                 }}
-                className="absolute left-1/2 -translate-x-1/2 bg-ink px-1">
-                
+                className="relative z-10 flex items-center justify-center bg-ink px-1">
                 <Plane size={20} className="text-teal-light rotate-90" />
               </motion.div>
             </div>
