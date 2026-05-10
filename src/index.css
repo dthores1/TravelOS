@@ -1,0 +1,48 @@
+/* @import url() FONT IMPORTS MUST ALWAYS BE AT THE VERY TOP OF THIS FILE, ABOVE THE TAILWIND IMPORTS — DO NOT DELETE THIS COMMENT */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300..700&display=swap');
+
+/* CRITICAL: THE FOLLOWING TAILWIND IMPORTS MUST NEVER BE DELETED OR REORDERED — DO NOT DELETE THIS COMMENT */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
+
+:root {
+  --bg-cream: #FAF8F4;
+  --text-ink: #1a1a1a;
+  --text-muted: #525252;
+  --accent-teal: #0f766e;
+  --accent-teal-light: #ccfbf1;
+  --status-amber: #d97706;
+  --status-amber-light: #fef3c7;
+  --status-green: #15803d;
+  --status-red: #b91c1c;
+  --border-warm: #e5e0d8;
+  --surface-white: #ffffff;
+}
+body {
+  background-color: var(--bg-cream);
+  color: var(--text-ink);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: 'Fraunces', serif;
+}
+/* Custom scrollbar for a cleaner look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-warm);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d1cbbd;
+}
