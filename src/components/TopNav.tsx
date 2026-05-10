@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Compass, User, Menu } from 'lucide-react';
+import { Compass, User, Menu, X } from 'lucide-react';
 export function TopNav() {
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
   const navItems = [
   {
     label: 'Plan',
@@ -69,11 +73,36 @@ export function TopNav() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
-            <button className="text-ink p-2">
-              <Menu size={24} />
+            <button
+              onClick={() => setIsMenuOpen((open) => !open)}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMenuOpen}
+              className="text-ink p-2">
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu Panel */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-warm py-3">
+            <div className="flex flex-col gap-1">
+              {navItems.map((item) => {
+                const isActive =
+                  location.pathname.startsWith(item.path) &&
+                  item.path !== '/' ||
+                  location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${isActive ? 'text-teal bg-teal-light/40' : 'text-muted hover:text-ink hover:bg-warm/40'}`}>
+                    {item.label}
+                  </Link>);
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </nav>);
 
