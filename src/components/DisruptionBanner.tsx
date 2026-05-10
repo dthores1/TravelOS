@@ -2,8 +2,10 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, Clock, ArrowRight } from 'lucide-react';
 import { useTrip } from '../context/TripContext';
+import { useTrackEvent } from '../analytics/trackEvent';
 export function DisruptionBanner() {
   const { trip } = useTrip();
+  const track = useTrackEvent();
   if (trip.disruptionState === 'none') return null;
   const isDelay = trip.disruptionState === 'delayed';
   const isGate = trip.disruptionState === 'gateChange';
@@ -52,9 +54,12 @@ export function DisruptionBanner() {
           </div>
 
           {isDelay &&
-          <button className="whitespace-nowrap text-sm font-medium text-ink bg-surface border border-warm px-4 py-2 rounded-lg hover:bg-warm/50 transition-colors flex items-center gap-2 w-full md:w-auto justify-center">
+          <a
+            href="#itinerary"
+            onClick={() => track('cta_clicked', { cta: 'review_adjustments', source: 'disruption_banner', target_path: '#itinerary' })}
+            className="whitespace-nowrap text-sm font-medium text-ink bg-surface border border-warm px-4 py-2 rounded-lg hover:bg-warm/50 transition-colors flex items-center gap-2 w-full md:w-auto justify-center">
               Review adjustments <ArrowRight size={16} />
-            </button>
+            </a>
           }
         </div>
       </motion.div>

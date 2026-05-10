@@ -10,6 +10,7 @@ import {
 'lucide-react';
 import { useTrip } from '../context/TripContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTrackEvent } from '../analytics/trackEvent';
 export function DemoControlPanel() {
   const {
     trip,
@@ -20,6 +21,7 @@ export function DemoControlPanel() {
     resetTrip
   } = useTrip();
   const [isOpen, setIsOpen] = useState(false);
+  const track = useTrackEvent();
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       <AnimatePresence>
@@ -51,7 +53,10 @@ export function DemoControlPanel() {
                 Demo Controls
               </h3>
               <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                track('demo_panel_toggled', { open: false });
+                setIsOpen(false);
+              }}
               className="text-cream/60 hover:text-cream">
               
                 <X size={18} />
@@ -69,7 +74,10 @@ export function DemoControlPanel() {
                 return (
                   <button
                     key={t.id}
-                    onClick={() => setActiveTripId(t.id)}
+                    onClick={() => {
+                      track('trip_switched', { trip_id: t.id, source: 'demo_panel' });
+                      setActiveTripId(t.id);
+                    }}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${isActive ? 'bg-teal text-cream' : 'bg-cream/5 hover:bg-cream/15 text-cream/90'}`}>
                     
                       <div className="font-medium">
@@ -93,17 +101,23 @@ export function DemoControlPanel() {
                 Disruption simulation
               </div>
               <button
-              onClick={simulateDelay}
+              onClick={() => {
+                track('demo_disruption_triggered', { kind: 'delay' });
+                simulateDelay();
+              }}
               className="w-full flex items-center gap-3 px-3 py-2.5 bg-cream/10 hover:bg-cream/20 rounded-lg text-sm transition-colors text-left">
-              
+
                 <Clock size={16} className="text-amber-light" />
                 <span>Simulate 45m Delay</span>
               </button>
 
               <button
-              onClick={simulateGateChange}
+              onClick={() => {
+                track('demo_disruption_triggered', { kind: 'gate_change' });
+                simulateGateChange();
+              }}
               className="w-full flex items-center gap-3 px-3 py-2.5 bg-cream/10 hover:bg-cream/20 rounded-lg text-sm transition-colors text-left">
-              
+
                 <AlertTriangle size={16} className="text-amber-light" />
                 <span>Trigger Gate Change</span>
               </button>
@@ -111,9 +125,12 @@ export function DemoControlPanel() {
               <div className="h-px w-full bg-cream/20 my-2"></div>
 
               <button
-              onClick={resetTrip}
+              onClick={() => {
+                track('demo_trip_reset');
+                resetTrip();
+              }}
               className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-cream/10 rounded-lg text-sm transition-colors text-left text-cream/80">
-              
+
                 <RotateCcw size={16} />
                 <span>Reset Trip State</span>
               </button>
@@ -123,7 +140,10 @@ export function DemoControlPanel() {
       </AnimatePresence>
 
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          track('demo_panel_toggled', { open: !isOpen });
+          setIsOpen(!isOpen);
+        }}
         className="bg-teal hover:bg-teal/90 text-cream rounded-full p-3 shadow-floating transition-transform hover:scale-105 flex items-center justify-center"
         aria-label="Toggle demo controls">
         

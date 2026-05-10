@@ -18,10 +18,18 @@ import FlightDetail from './pages/FlightDetail';
 import CaseStudy from './pages/CaseStudy';
 import Confirmation from './pages/Confirmation';
 import TripSupport from './pages/TripSupport';
+import { usePageView } from './analytics/usePageView';
+
+function AnalyticsListener() {
+  usePageView();
+  return null;
+}
+
 export function App() {
   return (
     <TripProvider>
       <BrowserRouter>
+        <AnalyticsListener />
         <Toaster position="top-center" richColors />
         <Routes>
           <Route path="/" element={<Layout />}>

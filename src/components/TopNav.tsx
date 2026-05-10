@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Compass, User, Menu, X } from 'lucide-react';
+import { useTrackEvent } from '../analytics/trackEvent';
 export function TopNav() {
   const location = useLocation();
+  const track = useTrackEvent();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   useEffect(() => {
     setIsMenuOpen(false);
@@ -30,7 +32,7 @@ export function TopNav() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center gap-2">
-            <Link to="/" className="flex items-center gap-2 group">
+            <Link to="/" onClick={() => track('logo_clicked')} className="flex items-center gap-2 group">
               <div className="bg-ink text-cream p-1.5 rounded-md group-hover:bg-teal transition-colors">
                 <Compass size={20} />
               </div>
@@ -52,8 +54,9 @@ export function TopNav() {
                   <Link
                     key={item.path}
                     to={item.path}
+                    onClick={() => track('nav_link_clicked', { label: item.label, target_path: item.path, source: 'desktop' })}
                     className={`text-sm font-medium transition-colors ${isActive ? 'text-teal' : 'text-muted hover:text-ink'}`}>
-                    
+
                     {item.label}
                   </Link>);
 
@@ -74,7 +77,12 @@ export function TopNav() {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
-              onClick={() => setIsMenuOpen((open) => !open)}
+              onClick={() => {
+                setIsMenuOpen((open) => {
+                  track('mobile_menu_toggled', { open: !open });
+                  return !open;
+                });
+              }}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
               className="text-ink p-2">
@@ -96,6 +104,7 @@ export function TopNav() {
                   <Link
                     key={item.path}
                     to={item.path}
+                    onClick={() => track('nav_link_clicked', { label: item.label, target_path: item.path, source: 'mobile' })}
                     className={`px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${isActive ? 'text-teal bg-teal-light/40' : 'text-muted hover:text-ink hover:bg-warm/40'}`}>
                     {item.label}
                   </Link>);

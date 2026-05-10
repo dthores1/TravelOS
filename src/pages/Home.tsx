@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Plane, Sparkles, Calendar, MapPin } from 'lucide-react';
 import { useTrip } from '../context/TripContext';
+import { useTrackEvent } from '../analytics/trackEvent';
 export default function Home() {
   const { trip, trips, setActiveTripId } = useTrip();
+  const track = useTrackEvent();
   const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-US', {
     month: 'short',
@@ -35,20 +37,23 @@ export default function Home() {
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <Link
             to="/trip/active"
+            onClick={() => track('cta_clicked', { cta: 'open_active_trip', source: 'home_hero', target_path: '/trip/active' })}
             className="bg-ink text-cream px-6 py-3 rounded-xl font-medium hover:bg-ink/90 transition-colors flex items-center gap-2">
-            
+
             Open active trip <ArrowRight size={18} />
           </Link>
           <Link
             to="/plan"
+            onClick={() => track('cta_clicked', { cta: 'plan_sample_trip', source: 'home_hero', target_path: '/plan' })}
             className="bg-surface text-ink border border-warm px-6 py-3 rounded-xl font-medium hover:border-ink/40 transition-colors">
-            
+
             Plan a sample trip
           </Link>
           <Link
             to="/case-study"
+            onClick={() => track('cta_clicked', { cta: 'read_case_study', source: 'home_hero', target_path: '/case-study' })}
             className="text-ink/70 hover:text-ink px-3 py-3 text-sm font-medium underline-offset-4 hover:underline transition-colors">
-            
+
             Read the case study →
           </Link>
         </div>
@@ -60,14 +65,16 @@ export default function Home() {
           <h3 className="font-serif text-2xl text-ink">Continue active trip</h3>
           <Link
             to="/trips"
+            onClick={() => track('cta_clicked', { cta: 'view_all_trips', source: 'home', target_path: '/trips' })}
             className="text-sm text-teal hover:underline font-medium">
-            
+
             View all trips
           </Link>
         </div>
 
         <Link
           to="/trip/active"
+          onClick={() => track('cta_clicked', { cta: 'active_trip_card', source: 'home', target_path: '/trip/active' })}
           className="block group bg-surface border border-warm rounded-2xl shadow-subtle hover:border-teal/50 transition-colors overflow-hidden">
           
           <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 p-6 items-center">
@@ -112,7 +119,10 @@ export default function Home() {
           {otherTrips.map((t) =>
           <button
             key={t.id}
-            onClick={() => setActiveTripId(t.id)}
+            onClick={() => {
+              track('trip_switched', { trip_id: t.id, source: 'home' });
+              setActiveTripId(t.id);
+            }}
             className="text-left bg-surface border border-warm rounded-xl p-5 hover:border-ink/30 transition-colors group">
             
               <div className="flex items-start justify-between mb-3 gap-3">

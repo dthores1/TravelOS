@@ -11,6 +11,7 @@ import {
 'lucide-react';
 import { Link } from 'react-router-dom';
 import { TimelineEvent } from '../types';
+import { useTrackEvent } from '../analytics/trackEvent';
 interface NextActionCardProps {
   event: TimelineEvent | null;
 }
@@ -54,6 +55,7 @@ function getCTA(event: TimelineEvent): CTAConfig {
   }
 }
 export function NextActionCard({ event }: NextActionCardProps) {
+  const track = useTrackEvent();
   if (!event) return null;
   const isFlight = event.type === 'flight';
   const isTransport = event.type === 'transport';
@@ -109,12 +111,14 @@ export function NextActionCard({ event }: NextActionCardProps) {
         {cta.to.startsWith('#') ? (
           <a
             href={cta.to}
+            onClick={() => track('next_action_clicked', { event_type: event.type, label: cta.label, target: cta.to })}
             className="flex items-center justify-center gap-2 bg-ink text-cream px-6 py-3 rounded-lg font-medium hover:bg-ink/90 transition-colors w-full md:w-auto whitespace-nowrap">
             {cta.label} {cta.icon}
           </a>
         ) : (
           <Link
             to={cta.to}
+            onClick={() => track('next_action_clicked', { event_type: event.type, label: cta.label, target: cta.to })}
             className="flex items-center justify-center gap-2 bg-ink text-cream px-6 py-3 rounded-lg font-medium hover:bg-ink/90 transition-colors w-full md:w-auto whitespace-nowrap">
             {cta.label} {cta.icon}
           </Link>
